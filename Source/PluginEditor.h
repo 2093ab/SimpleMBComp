@@ -122,20 +122,14 @@ struct RotarySlider : juce::Slider
     { }
 };
 
-/*
-template<
-    typename Attachment,
-    typename APVTS,
-    typename Params,
-    typename ParamName,
-    typename SliderType
-        >
-void makeAttachment(std::unique_ptr<Attachment>* attachment, APVTS& apvts, const Params& params, const ParamName& name, SliderType& slider)
+
+template<typename Attachment, typename APVTS, typename Params, typename ParamName, typename SliderType>
+void makeAttachment(std::unique_ptr<Attachment>& attachment, APVTS& apvts, const Params& params, const ParamName& name, SliderType& slider)
 {
     attachment = std::make_unique<Attachment>(apvts,
                                               params.at(name),
                                               slider);
-}*/
+}
 
 template<typename APVTS, typename Params, typename Name>
 juce::RangedAudioParameter& getParam(APVTS& apvts, const  Params& params, const Name& name)
@@ -171,6 +165,14 @@ private:
     
     using Attachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     std::unique_ptr<Attachment> attackSliderAttachment, releaseSliderAttachment, thresholdSliderAttachment, ratioSliderAttachment;
+    
+    juce::ToggleButton bypassButton, soloButton, muteButton, lowBand, midBand, highBand;
+    
+    using BtnAttachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
+    std::unique_ptr<BtnAttachment> bypassButtonAttachment, soloButtonAttachment, muteButtonAttachment;
+    
+    juce::Component::SafePointer<CompressorBandControls> safePtr {this};
+    void updateAttachments();
 };
 
 struct GlobalControls : juce::Component
@@ -186,6 +188,7 @@ private:
     
     using Attachment = juce::AudioProcessorValueTreeState::SliderAttachment;
     std::unique_ptr<Attachment> lowMidXoerSliderAttachment, midHighXoverSliderAttachment, inGainSliderAttachment, outGainSliderAttachment;
+    
 };
 /**
 */
