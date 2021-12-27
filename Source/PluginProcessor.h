@@ -28,10 +28,7 @@ GUI Roadmap
  
  */
 #include <JuceHeader.h>
-#include "CompressorBand.h"
-#include "LookAndFeel.h"
-#include "GlobalControls.h"
-#include "CompressorBandControls.h"
+#include "DSP/CompressorBand.h"
 
 //==============================================================================
 /**
